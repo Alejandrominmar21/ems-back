@@ -3,9 +3,12 @@ package com.minchon.ems_back.controller;
 import com.minchon.ems_back.dto.EmployeeDto;
 import com.minchon.ems_back.service.EmployeeService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.repository.cdi.Eager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @AllArgsConstructor
 @RestController
@@ -25,6 +28,13 @@ public class EmployeeController {
         EmployeeDto employeeDto = employeeService.getEmployeeById(employeeId);
 
         return ResponseEntity.ok(employeeDto);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployees(){
+        List<EmployeeDto> employees = employeeService.getAllEmployees();
+
+        return ResponseEntity.ok(employees);
     }
 
 }

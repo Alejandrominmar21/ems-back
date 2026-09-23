@@ -9,6 +9,9 @@ import com.minchon.ems_back.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @AllArgsConstructor
 public class EmployeeServiceImp implements EmployeeService {
@@ -28,5 +31,13 @@ public class EmployeeServiceImp implements EmployeeService {
         Employee employee = employeeRepository.findById(employeeId)
                 .orElseThrow(()->new ResourceNotFoundException("Employee doesnt exists"));
         return EmployeeMapper.mapToEmployeeDto(employee);
+    }
+
+    @Override
+    public List<EmployeeDto> getAllEmployees() {
+        List<Employee> employees = employeeRepository.findAll();
+
+        return  employees.stream().map((employee) -> EmployeeMapper.mapToEmployeeDto(employee)).collect(Collectors.toList());
+
     }
 }
